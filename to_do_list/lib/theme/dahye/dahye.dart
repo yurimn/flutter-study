@@ -29,7 +29,7 @@ class DahyeAppState extends State<DahyeApp> {
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         centerTitle: true,
-        backgroundColor: Colors.purple.shade300,
+        backgroundColor: const Color.fromARGB(255, 209, 149, 219),
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {},
