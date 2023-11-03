@@ -29,7 +29,7 @@ class DahyeAppState extends State<DahyeApp> {
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         centerTitle: true,
-        backgroundColor: Colors.purple.shade300,
+        backgroundColor: const Color.fromARGB(250, 254, 190, 73),
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {},
@@ -74,18 +74,6 @@ Widget menuMonth() {
   return const Text('Month');
 }
 
-Widget menuList(context) {
-  return Container(
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * 0.9,
-      color: Colors.blue,
-      child:
-          const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text("number 1"),
-        Text("number 2"),
-        Text("number 3"),
-      ]));
-}
 
 Widget menuWeek() {
   return const Text('Week');
