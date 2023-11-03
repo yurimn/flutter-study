@@ -19,7 +19,7 @@ class DahyeAppState extends State<DahyeApp> {
     final List<Widget> widgetOptions = <Widget>[
       menuWeek4(),
       menuMonth4(),
-      MenuList(),
+      const MenuList(),
     ];
     return Scaffold(
       appBar: AppBar(
@@ -29,7 +29,7 @@ class DahyeAppState extends State<DahyeApp> {
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 209, 149, 219),
+        backgroundColor: const Color.fromARGB(250, 254, 190, 73),
         leading: IconButton(
           icon: const Icon(Icons.menu, color: Colors.white),
           onPressed: () {},
@@ -72,19 +72,6 @@ class DahyeAppState extends State<DahyeApp> {
 
 Widget menuMonth() {
   return const Text('Month');
-}
-
-Widget menuList(context) {
-  return Container(
-      alignment: Alignment.center,
-      width: MediaQuery.of(context).size.width * 0.9,
-      color: Colors.blue,
-      child:
-          const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Text("number 1"),
-        Text("number 2"),
-        Text("number 3"),
-      ]));
 }
 
 Widget menuWeek() {
