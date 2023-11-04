@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'theme/basic/basic_app.dart';
+import 'theme/jiwon/jiwon.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: BasicApp(),
+      home: JiwonApp(),
     );
   }
 }
