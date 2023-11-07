@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list_0.dart';
-import 'week_0.dart';
+import 'memo_0.dart';
 import 'month_0.dart';
 
 class BasicApp extends StatefulWidget {
@@ -16,7 +16,7 @@ class BasicAppState extends State<BasicApp> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      const MenuWeek(),
+      const MenuMemo(),
       const MenuMonth(),
       const MenuList()
     ];

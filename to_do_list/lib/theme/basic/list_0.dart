@@ -71,6 +71,7 @@ class MenuListState extends State<MenuList> {
                 itemCount: listComponent.length,
                 itemBuilder: (BuildContext context, int index) {
                   return menuComponent(
+                      context,
                       listComponent[index],
                       deleteButton(index, () {
                         setState(() {
@@ -83,11 +84,17 @@ class MenuListState extends State<MenuList> {
   }
 }
 
-Widget menuComponent(List content, Widget deleteButton) {
+Widget menuComponent(BuildContext context, content, Widget deleteButton) {
   return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return viewToDoDialog(context, content);
+                });
+          },
           style: ElevatedButton.styleFrom(
             padding: const EdgeInsets.all(0),
             shape: const RoundedRectangleBorder(

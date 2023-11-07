@@ -1,8 +1,6 @@
 import "package:flutter/material.dart";
 
 Widget addToDoDialog(BuildContext context, Function add) {
-  // title, content, startTime, endTime to be added by textformfield
-
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
@@ -12,7 +10,7 @@ Widget addToDoDialog(BuildContext context, Function add) {
       content: Form(
         key: formKey,
         child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.3,
+            height: MediaQuery.of(context).size.height * 0.4,
             child: Column(
               children: [
                 TextFormField(
@@ -41,6 +39,41 @@ Widget addToDoDialog(BuildContext context, Function add) {
                     return null;
                   },
                 ),
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2025))
+                          .then((value) {
+                        if (value != null) {
+                          print(value);
+                        }
+                      });
+                    },
+                    child: const Text("Date"),
+                  ),
+                ),
+                // timepicker
+                SizedBox(
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showTimePicker(
+                              context: context, initialTime: TimeOfDay.now())
+                          .then((value) {
+                        if (value != null) {
+                          print(value);
+                        }
+                      });
+                    },
+                    child: const Text("Time"),
+                  ),
+                ),
+
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -59,4 +92,28 @@ Widget addToDoDialog(BuildContext context, Function add) {
               ],
             )),
       ));
+}
+
+Widget viewToDoDialog(BuildContext context, List content) {
+  return AlertDialog(
+    title: Text(content[0]),
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text("content : " + content[1]),
+        const SizedBox(height: 10),
+        Text(content[2]),
+        const SizedBox(height: 10),
+        Text(content[3]),
+      ],
+    ),
+    actions: [
+      TextButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: const Text("Close"),
+      )
+    ],
+  );
 }

@@ -1,19 +1,20 @@
 name: to_do_list
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: '>=3.2.0-231.0.dev <4.0.0'
+    sdk: ">=3.2.0-231.0.dev <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
+    flutter:
+        sdk: flutter
+    flutter_drawing_board: ^0.5.0
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  flutter_lints: ^2.0.0
+    flutter_test:
+        sdk: flutter
+    flutter_lints: ^2.0.0
 
 flutter:
-  uses-material-design: true
+    uses-material-design: true

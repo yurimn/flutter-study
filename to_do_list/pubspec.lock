@@ -54,6 +54,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_drawing_board:
+    dependency: "direct main"
+    description:
+      name: flutter_drawing_board
+      sha256: "4e076d7c921446e3b66cf0972042f82a4c0316522d0fea9d946113fd4e3ab218"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -178,3 +186,4 @@ packages:
     version: "0.2.2-beta"
 sdks:
   dart: ">=3.2.0-231.0.dev <4.0.0"
+  flutter: ">=3.0.0"
