@@ -29,7 +29,7 @@ class BasicAppState extends State<BasicApp> {
         ),
         title: const Text('TODOLIST',
             style: TextStyle(
-                color: Colors.white,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         actions: [
@@ -39,7 +39,10 @@ class BasicAppState extends State<BasicApp> {
           )
         ],
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 5,
+        shadowColor: Colors.grey.withOpacity(0.5),
       ),
       body: Center(
         child: widgetOptions.elementAt(_selectedIndex),

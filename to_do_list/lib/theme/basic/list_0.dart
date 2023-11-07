@@ -10,11 +10,12 @@ class MenuList extends StatefulWidget {
 
 class MenuListState extends State<MenuList> {
   List listComponent = [
-    menuComponent("title1", "content1"),
-    menuComponent("title2", "content2"),
-    menuComponent("title3", "content3"),
-    menuComponent("title4", "content4"),
+    ["title1", "content1"],
+    ["title2", "content2"],
+    ["title3", "content3"],
+    ["title4", "content4"]
   ];
+
   @override
   Widget build(BuildContext context) {
     Widget addButton() {
@@ -30,7 +31,7 @@ class MenuListState extends State<MenuList> {
                       return addToDoDialog(context,
                           (String title, String content) {
                         setState(() {
-                          listComponent.add(menuComponent(title, content));
+                          listComponent.add([title, content]);
                         });
                       });
                     });
@@ -45,6 +46,19 @@ class MenuListState extends State<MenuList> {
           ));
     }
 
+    Widget deleteButton(int index, Function() onPressed) {
+      return IconButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(const CircleBorder()),
+            iconSize: MaterialStateProperty.all(25),
+            alignment: Alignment.center),
+        padding: const EdgeInsets.all(0),
+        icon: const Icon(Icons.delete, color: Colors.red),
+      );
+    }
+
     return Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -52,13 +66,24 @@ class MenuListState extends State<MenuList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             addButton(),
-            ...listComponent,
+            ListView.builder(
+                shrinkWrap: true,
+                itemCount: listComponent.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return menuComponent(
+                      listComponent[index],
+                      deleteButton(index, () {
+                        setState(() {
+                          listComponent.removeAt(index);
+                        });
+                      }));
+                })
           ],
         ));
   }
 }
 
-Widget menuComponent(String title, String content) {
+Widget menuComponent(List content, Widget deleteButton) {
   return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: Container(
@@ -70,17 +95,14 @@ Widget menuComponent(String title, String content) {
                 color: const Color.fromARGB(255, 130, 130, 130), width: 1.5),
             borderRadius: const BorderRadius.all(Radius.circular(10)),
           ),
-          child: Row(children: [
-            SizedBox(
-              child: Row(
-                children: [
-                  Text(title,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(width: 10),
-                  Text(content),
-                ],
-              ),
-            ),
-            const Icon(Icons.delete, color: Color.fromARGB(255, 130, 130, 130)),
-          ])));
+          child: Row(
+            children: [
+              Text(content[0],
+                  style: const TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(width: 10),
+              Text(content[1]),
+              const Spacer(),
+              deleteButton
+            ],
+          )));
 }
