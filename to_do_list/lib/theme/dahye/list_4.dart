@@ -47,12 +47,6 @@ class MenuListState extends State<MenuList> {
           },
         );
       },
-      // style: ElevatedButton.styleFrom(
-      //   backgroundColor: Colors.grey,
-      //   shape: const RoundedRectangleBorder(
-      //     borderRadius: BorderRadius.all(Radius.circular(10)),
-      //   ),
-      // ),
       child: const Icon(Icons.delete, color: Color.fromRGBO(0, 32, 74, 50)),
     );
   }
