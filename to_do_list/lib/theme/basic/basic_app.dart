@@ -56,12 +56,12 @@ class BasicAppState extends State<BasicApp> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
-            label: 'Week',
+            icon: Icon(Icons.draw),
+            label: 'Memo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: 'Month',
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.ballot),
