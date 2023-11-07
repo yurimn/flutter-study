@@ -29,7 +29,7 @@ GDSC 고려대학교 2기 모바일 주니어 스터디를 위한 자료 및 과
   - 모바일 UI 종류 (top & bottom bar, sheet, modal 등등..)
   - flutter에서의 적용
 
-- 3주차 (11/7)
+- 3주차 (11/7) [[lecture]](https://github.com/yurimn/flutter-study/blob/main/lecture/week3/week3.pdf)
   - style/class/package
 
 - 4주차 (11/14)
