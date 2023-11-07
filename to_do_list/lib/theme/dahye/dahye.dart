@@ -74,7 +74,6 @@ Widget menuMonth() {
   return const Text('Month');
 }
 
-
 Widget menuWeek() {
   return const Text('Week');
 }
