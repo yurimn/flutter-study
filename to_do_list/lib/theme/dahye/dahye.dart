@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'list_4.dart';
-import 'week_4.dart';
+import 'photo.dart';
 import 'month_4.dart';
 
 class DahyeApp extends StatefulWidget {
@@ -17,7 +17,7 @@ class DahyeAppState extends State<DahyeApp> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      menuWeek4(),
+      MenuPhoto(),
       menuMonth4(),
       MenuList(),
     ];
@@ -48,8 +48,8 @@ class DahyeAppState extends State<DahyeApp> {
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.view_kanban),
-            label: 'Week',
+            icon: Icon(Icons.image),
+            label: 'Photo',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.grid_view),
@@ -72,9 +72,4 @@ class DahyeAppState extends State<DahyeApp> {
 
 Widget menuMonth() {
   return const Text('Month');
-}
-
-
-Widget menuWeek() {
-  return const Text('Week');
 }
