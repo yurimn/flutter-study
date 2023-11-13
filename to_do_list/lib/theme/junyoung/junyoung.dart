@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'list_11.dart';
-import 'week_11.dart';
+import 'memo_11.dart';
 import 'month_11.dart';
 
 class BasicApp extends StatefulWidget {
@@ -16,7 +16,7 @@ class BasicAppState extends State<BasicApp> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      const MenuWeek(),
+      const MenuMemo(),
       const MenuMonth(),
       const MenuList()
     ];
@@ -29,7 +29,7 @@ class BasicAppState extends State<BasicApp> {
         ),
         title: const Text('TODOLIST',
             style: TextStyle(
-                color: Colors.white,
+                color: Color.fromARGB(255, 0, 0, 0),
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         actions: [
@@ -39,7 +39,10 @@ class BasicAppState extends State<BasicApp> {
           )
         ],
         centerTitle: true,
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 5,
+        shadowColor: Colors.grey.withOpacity(0.5),
       ),
       body: Center(
         child: widgetOptions.elementAt(_selectedIndex),
@@ -53,12 +56,12 @@ class BasicAppState extends State<BasicApp> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.apps),
-            label: 'Week',
+            icon: Icon(Icons.draw),
+            label: 'Memo',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.grid_view),
-            label: 'Month',
+            icon: Icon(Icons.calendar_today),
+            label: 'Calendar',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.ballot),

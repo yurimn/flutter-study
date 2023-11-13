@@ -13,3 +13,26 @@ class MenuMonthState extends State<MenuMonth> {
     return const Text("Month");
   }
 }
+
+
+/*
+
+// month.dart
+import 'package:flutter/material.dart';
+Widget MenuMonth() {
+  return const Text("Month");
+}
+
+// week.dart
+import 'package:flutter/material.dart';
+Widget MenuWeek() {
+  return const Text("Week");
+}
+
+// list.dart
+import 'package:flutter/material.dart';
+Widget MenuList() {
+  return const Text("List");
+}
+
+*/
