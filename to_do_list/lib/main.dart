@@ -12,6 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: DahyeApp(),
+      theme: ThemeData(primarySwatch: Colors.yellow),
     );
   }
 }

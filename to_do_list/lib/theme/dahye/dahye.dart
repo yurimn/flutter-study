@@ -18,7 +18,7 @@ class DahyeAppState extends State<DahyeApp> {
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
       MenuPhoto(),
-      menuMonth4(),
+      MenuMonth(),
       MenuList(),
     ];
     return Scaffold(
@@ -68,8 +68,4 @@ class DahyeAppState extends State<DahyeApp> {
       ),
     );
   }
-}
-
-Widget menuMonth() {
-  return const Text('Month');
 }

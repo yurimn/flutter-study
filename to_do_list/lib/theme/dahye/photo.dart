@@ -36,8 +36,8 @@ class _MenuPhotoState extends State<MenuPhoto> {
                             )),
                         SizedBox(height: 20),
                         Container(
-                          height: MediaQuery.of(context).size.width * 0.8,
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.7,
                           decoration: BoxDecoration(
                               color: Color.fromARGB(248, 245, 238, 225),
                               shape: BoxShape.circle),
