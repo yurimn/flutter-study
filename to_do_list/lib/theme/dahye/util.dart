@@ -18,11 +18,11 @@ class AddToDoDialogState extends State<AddToDoDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Add ToDo"),
+      title: const Text("일정 추가"),
       content: Form(
         key: formKey,
         child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width * 0.4,
             child: Column(
               children: [
@@ -69,12 +69,13 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                     },
                     child: const Text("시작"),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 15),
                   Expanded(
                       child: TextFormField(
                     controller: startDateController,
                     decoration: const InputDecoration(
                       labelText: "시작일",
+                      hintText: "YYYY-MM-DD",
                     ),
                     validator: (String? value) {
                       if (value == null ||
@@ -105,12 +106,13 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                     },
                     child: const Text("종료"),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 15),
                   Expanded(
                       child: TextFormField(
                     controller: endDateController,
                     decoration: const InputDecoration(
                       labelText: "종료일",
+                      hintText: "YYYY-MM-DD",
                     ),
                     validator: (String? value) {
                       if (value == null ||

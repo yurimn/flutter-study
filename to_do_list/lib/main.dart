@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list/theme/dahye/theme.dart';
 import 'theme/dahye/dahye.dart';
 
 void main() {
@@ -11,8 +12,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: DahyeApp(),
-      theme: ThemeData(primarySwatch: Colors.yellow),
+      theme: MyThemeData.lightThemeData,
     );
   }
 }

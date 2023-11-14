@@ -95,8 +95,27 @@ class MenuMonthState extends State<MenuMonth> {
                         .isAtSameMomentAs(_focusedDay)) {
                   return Card(
                       child: ListTile(
-                          title: Text(data[0]),
-                          subtitle: Text(data[1]),
+                          title: Text(data[0],
+                              style: TextStyle(
+                                color: Colors.black,
+                              )),
+                          subtitle: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                data[1],
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              Text(
+                                "~ " + data[3],
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            ],
+                          ),
                           onTap: () {
                             showDialog(
                                 context: context,
@@ -104,6 +123,8 @@ class MenuMonthState extends State<MenuMonth> {
                                   return viewToDoDialog(context, data);
                                 });
                           }));
+                } else {
+                  return Container();
                 }
               }))
     ]);
