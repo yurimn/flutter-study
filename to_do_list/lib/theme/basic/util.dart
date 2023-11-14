@@ -153,6 +153,7 @@ Widget viewToDoDialog(BuildContext context, List content) {
     title: Text(content[0]),
     content: Column(
       mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text("content : " + content[1]),
         const SizedBox(height: 10),
