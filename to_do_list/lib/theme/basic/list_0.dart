@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'util.dart';
 
 class MenuList extends StatefulWidget {
@@ -9,12 +13,20 @@ class MenuList extends StatefulWidget {
 }
 
 class MenuListState extends State<MenuList> {
-  List listComponent = [
-    ["title1", "content1", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-    ["title2", "content2", "2023-11-10 11:27:00", "2023-11-11 13:27:00"],
-    ["title3", "content3", "2023-11-08 10:27:00", "2023-11-10 13:27:00"],
-    ["title4", "content4", "2023-11-05 10:20:00", "2023-11-06 10:24:00"]
-  ];
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  List<String> listComponent = [];
+  Future<void> _loadData() async {
+    final SharedPreferences prefs = await _prefs;
+    setState(() {
+      listComponent = prefs.getStringList("listComponent") ?? [];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +40,13 @@ class MenuListState extends State<MenuList> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return addToDoDialog(context,
-                          (String title, String content) {
+                      return AddToDoDialog(add: (String title, String content,
+                          String startDate, String endDate) async {
+                        final SharedPreferences prefs = await _prefs;
                         setState(() {
-                          listComponent.add([title, content]);
+                          listComponent.add(
+                              jsonEncode([title, content, startDate, endDate]));
+                          prefs.setStringList("listComponent", listComponent);
                         });
                       });
                     });
@@ -66,6 +81,11 @@ class MenuListState extends State<MenuList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             addButton(),
+            if (listComponent.isEmpty)
+              const Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Text("No data"),
+              ),
             ListView.builder(
                 shrinkWrap: true,
                 itemCount: listComponent.length,
@@ -73,9 +93,11 @@ class MenuListState extends State<MenuList> {
                   return menuComponent(
                       context,
                       listComponent[index],
-                      deleteButton(index, () {
+                      deleteButton(index, () async {
+                        final SharedPreferences prefs = await _prefs;
                         setState(() {
                           listComponent.removeAt(index);
+                          prefs.setStringList("listComponent", listComponent);
                         });
                       }));
                 })
@@ -85,6 +107,8 @@ class MenuListState extends State<MenuList> {
 }
 
 Widget menuComponent(BuildContext context, content, Widget deleteButton) {
+  List listContent = jsonDecode(content);
+
   return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: ElevatedButton(
@@ -92,7 +116,7 @@ Widget menuComponent(BuildContext context, content, Widget deleteButton) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return viewToDoDialog(context, content);
+                  return viewToDoDialog(context, listContent);
                 });
           },
           style: ElevatedButton.styleFrom(
@@ -113,10 +137,10 @@ Widget menuComponent(BuildContext context, content, Widget deleteButton) {
               ),
               child: Row(
                 children: [
-                  Text(content[0],
+                  Text(listContent[0],
                       style: const TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(width: 10),
-                  Text(content[1]),
+                  Text(listContent[1]),
                   const Spacer(),
                   deleteButton
                 ],

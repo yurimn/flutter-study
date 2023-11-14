@@ -1,23 +1,35 @@
 import "package:flutter/material.dart";
 
-Widget addToDoDialog(BuildContext context, Function add) {
+class AddToDoDialog extends StatefulWidget {
+  const AddToDoDialog({Key? key, required this.add}) : super(key: key);
+  final Function add;
+
+  @override
+  AddToDoDialogState createState() => AddToDoDialogState();
+}
+
+class AddToDoDialogState extends State<AddToDoDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
+  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController endDateController = TextEditingController();
 
-  return AlertDialog(
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
       title: const Text("Add ToDo"),
       content: Form(
         key: formKey,
         child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.6,
+            width: MediaQuery.of(context).size.width * 0.6,
             child: Column(
               children: [
                 TextFormField(
                   controller: titleController,
                   decoration: const InputDecoration(
                     labelText: "Title",
-                    hintText: "Enter title",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -30,7 +42,6 @@ Widget addToDoDialog(BuildContext context, Function add) {
                   controller: contentController,
                   decoration: const InputDecoration(
                     labelText: "Content",
-                    hintText: "Enter content",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -39,9 +50,8 @@ Widget addToDoDialog(BuildContext context, Function add) {
                     return null;
                   },
                 ),
-                SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
+                Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  ElevatedButton(
                     onPressed: () {
                       showDatePicker(
                               context: context,
@@ -50,30 +60,71 @@ Widget addToDoDialog(BuildContext context, Function add) {
                               lastDate: DateTime(2025))
                           .then((value) {
                         if (value != null) {
-                          print(value);
+                          setState(() {
+                            startDateController.text =
+                                value.toString().substring(0, 10);
+                          });
                         }
                       });
                     },
                     child: const Text("Date"),
                   ),
-                ),
-                // timepicker
-                SizedBox(
-                  height: 50,
-                  child: ElevatedButton(
+                  const SizedBox(width: 10),
+                  Expanded(
+                      child: TextFormField(
+                    controller: startDateController,
+                    decoration: const InputDecoration(
+                      labelText: "Start Date",
+                    ),
+                    validator: (String? value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !RegExp(r"^\d{4}-\d{2}-\d{2}$").hasMatch(value)) {
+                        return "Please enter start date";
+                      }
+                      return null;
+                    },
+                  ))
+                ]),
+                Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  ElevatedButton(
                     onPressed: () {
-                      showTimePicker(
-                              context: context, initialTime: TimeOfDay.now())
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2025))
                           .then((value) {
                         if (value != null) {
-                          print(value);
+                          setState(() {
+                            endDateController.text =
+                                value.toString().substring(0, 10);
+                          });
                         }
                       });
                     },
-                    child: const Text("Time"),
+                    child: const Text("Date"),
                   ),
-                ),
-
+                  const SizedBox(width: 10),
+                  Expanded(
+                      child: TextFormField(
+                    controller: endDateController,
+                    decoration: const InputDecoration(
+                      labelText: "End Date",
+                    ),
+                    validator: (String? value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !RegExp(r"^\d{4}-\d{2}-\d{2}$").hasMatch(value)) {
+                        return "Please enter end date";
+                      }
+                      if (startDateController.text.compareTo(value) > 0) {
+                        return "End date must be\nafter start date";
+                      }
+                      return null;
+                    },
+                  ))
+                ]),
                 const Spacer(),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -83,7 +134,8 @@ Widget addToDoDialog(BuildContext context, Function add) {
                   ),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      add(titleController.text, contentController.text);
+                      widget.add(titleController.text, contentController.text,
+                          startDateController.text, endDateController.text);
                       Navigator.pop(context);
                     }
                   },
@@ -91,7 +143,9 @@ Widget addToDoDialog(BuildContext context, Function add) {
                 )
               ],
             )),
-      ));
+      ),
+    );
+  }
 }
 
 Widget viewToDoDialog(BuildContext context, List content) {
@@ -102,9 +156,9 @@ Widget viewToDoDialog(BuildContext context, List content) {
       children: [
         Text("content : " + content[1]),
         const SizedBox(height: 10),
-        Text(content[2]),
+        Text("start date : " + content[2].toString().substring(0, 10)),
         const SizedBox(height: 10),
-        Text(content[3]),
+        Text("end date : " + content[3].toString().substring(0, 10)),
       ],
     ),
     actions: [
