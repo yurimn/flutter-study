@@ -81,26 +81,28 @@ class MenuListState extends State<MenuList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             addButton(),
-            if (listComponent.isEmpty)
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Text("No data"),
-              ),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: listComponent.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return menuComponent(
-                      context,
-                      listComponent[index],
-                      deleteButton(index, () async {
-                        final SharedPreferences prefs = await _prefs;
-                        setState(() {
-                          listComponent.removeAt(index);
-                          prefs.setStringList("listComponent", listComponent);
-                        });
-                      }));
-                })
+            listComponent.isEmpty
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 200),
+                    child: Text("No schedule",
+                        style: TextStyle(fontSize: 20, color: Colors.grey)),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listComponent.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return menuComponent(
+                          context,
+                          listComponent[index],
+                          deleteButton(index, () async {
+                            final SharedPreferences prefs = await _prefs;
+                            setState(() {
+                              listComponent.removeAt(index);
+                              prefs.setStringList(
+                                  "listComponent", listComponent);
+                            });
+                          }));
+                    })
           ],
         ));
   }
