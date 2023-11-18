@@ -25,15 +25,15 @@ GDSC 고려대학교 2기 모바일 주니어 스터디를 위한 자료 및 과
   - 개발 flow 및 협업에서의 flutter
   - flutter layout & container
 
-- 2주차 (10/31)
+- 2주차 (10/31) [[lecture]](https://github.com/yurimn/flutter-study/blob/main/lecture/week2/week2.pdf)
   - 모바일 UI 종류 (top & bottom bar, sheet, modal 등등..)
   - flutter에서의 적용
 
-- 3주차 (11/7)
+- 3주차 (11/7) [[lecture]](https://github.com/yurimn/flutter-study/blob/main/lecture/week3/week3.pdf)
   - style/class/package
 
-- 4주차 (11/14)
-  - 비동기함수, 백엔드 통신
+- 4주차 (11/14) [[lecture]](https://github.com/yurimn/flutter-study/blob/main/lecture/week4/week4.pdf)
+  - 비동기함수, 내부 저장소 사용법
 
 - 5주차 (11/21)
   - 개인 결과물 공유 및 피드백
