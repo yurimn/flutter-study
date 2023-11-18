@@ -18,7 +18,6 @@ class MenuMonthState extends State<MenuMonth> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  List<String> selectedEvent = [];
   List<String> listComponent = [];
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -78,7 +77,6 @@ class MenuMonthState extends State<MenuMonth> {
                 final DateTime endDate = DateTime.parse(data[3]);
                 if ((startDate.isBefore(_focusedDay) &&
                         endDate.isAfter(_focusedDay)) ||
-                    startDate.isAtSameMomentAs(_focusedDay) ||
                     endDate.isAtSameMomentAs(_focusedDay)) {
                   return Card(
                       child: ListTile(
