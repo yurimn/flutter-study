@@ -1,5 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'util.dart';
+import 'junyoung.dart';
 
 class MenuList extends StatefulWidget {
   const MenuList({Key? key}) : super(key: key);
@@ -9,12 +14,20 @@ class MenuList extends StatefulWidget {
 }
 
 class MenuListState extends State<MenuList> {
-  List listComponent = [
-    ["title1", "content1", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-    ["title2", "content2", "2023-11-10 11:27:00", "2023-11-11 13:27:00"],
-    ["title3", "content3", "2023-11-08 10:27:00", "2023-11-10 13:27:00"],
-    ["title4", "content4", "2023-11-05 10:20:00", "2023-11-06 10:24:00"]
-  ];
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  List<String> listComponent = [];
+  Future<void> _loadData() async {
+    final SharedPreferences prefs = await _prefs;
+    setState(() {
+      listComponent = prefs.getStringList("listComponent") ?? [];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +38,17 @@ class MenuListState extends State<MenuList> {
           child: ElevatedButton(
             onPressed: () {
               setState(() {
+                BasicApp.selectedFontFamilly = BasicApp.selectedFontFamilly;
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return addToDoDialog(context, (String title,
-                          String content, String startDate, String endDate) {
+                      return AddToDoDialog(add: (String title, String content,
+                          String startDate, String endDate) async {
+                        final SharedPreferences prefs = await _prefs;
                         setState(() {
-                          listComponent
-                              .add([title, content, startDate, endDate]);
+                          listComponent.add(
+                              jsonEncode([title, content, startDate, endDate]));
+                          prefs.setStringList("listComponent", listComponent);
                         });
                       });
                     });
@@ -61,31 +77,45 @@ class MenuListState extends State<MenuList> {
     }
 
     return Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             addButton(),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: listComponent.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return menuComponent(
-                      context,
-                      listComponent[index],
-                      deleteButton(index, () {
-                        setState(() {
-                          listComponent.removeAt(index);
-                        });
-                      }));
-                })
+            listComponent.isEmpty
+                ? Padding(
+                    padding: EdgeInsets.only(top: 200),
+                    child: Text("No schedule",
+                        style: TextStyle(
+                            fontFamily: BasicApp.selectedFontFamilly,
+                            fontSize: 20,
+                            color: Colors.grey)),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listComponent.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return menuComponent(
+                          context,
+                          listComponent[index],
+                          deleteButton(index, () async {
+                            final SharedPreferences prefs = await _prefs;
+                            setState(() {
+                              listComponent.removeAt(index);
+                              prefs.setStringList(
+                                  "listComponent", listComponent);
+                            });
+                          }));
+                    })
           ],
         ));
   }
 }
 
 Widget menuComponent(BuildContext context, content, Widget deleteButton) {
+  List listContent = jsonDecode(content);
+
   return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: ElevatedButton(
@@ -93,7 +123,7 @@ Widget menuComponent(BuildContext context, content, Widget deleteButton) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return viewToDoDialog(context, content);
+                  return viewToDoDialog(context, listContent);
                 });
           },
           style: ElevatedButton.styleFrom(
@@ -114,10 +144,16 @@ Widget menuComponent(BuildContext context, content, Widget deleteButton) {
               ),
               child: Row(
                 children: [
-                  Text(content[0],
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
+                  Text(listContent[0],
+                      style: TextStyle(
+                          fontFamily: BasicApp.selectedFontFamilly,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
                   const SizedBox(width: 10),
-                  Text(content[1]),
+                  Text(listContent[1],
+                      style: TextStyle(
+                          fontFamily: BasicApp.selectedFontFamilly,
+                          color: Colors.grey)),
                   const Spacer(),
                   deleteButton
                 ],

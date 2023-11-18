@@ -6,14 +6,24 @@ void main() {
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({super.key});
+  // Using "static" so that we can easily access it later
+  static final ValueNotifier<ThemeMode> themeNotifier =
+      ValueNotifier(ThemeMode.light);
+
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: const BasicApp(),
-        theme: ThemeData(
-          primarySwatch: Colors.grey,
-        ));
+    return ValueListenableBuilder<ThemeMode>(
+        valueListenable: themeNotifier,
+        builder: (_, ThemeMode currentMode, __) {
+          return MaterialApp(
+            // Remove the debug banner
+            theme: ThemeData(primarySwatch: Colors.amber),
+            darkTheme: ThemeData.dark(),
+            themeMode: currentMode,
+            home: const BasicApp(),
+          );
+        });
   }
 }

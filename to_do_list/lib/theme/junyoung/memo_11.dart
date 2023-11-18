@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:story_painter/story_painter.dart';
 
 import 'dart:ui' as ui;
+import 'junyoung.dart';
 
 class MenuMemo extends StatefulWidget {
   const MenuMemo({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class MenuMemoState extends State<MenuMemo> {
     smoothRatio: 0.65,
     velocityRange: 2.0,
     color: Colors.black,
-    width: 8,
+    width: 5,
     onDrawStart: () {},
     onDrawEnd: () {},
   );
@@ -29,7 +30,8 @@ class MenuMemoState extends State<MenuMemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My canvas'),
+        title: Text('My canvas',
+            style: TextStyle(fontFamily: BasicApp.selectedFontFamilly)),
         actions: [
           IconButton(
             icon: Icon(Icons.undo),
@@ -73,8 +75,8 @@ class MenuMemoState extends State<MenuMemo> {
                   painterControl.setWidth(width);
                   setState(() {});
                 },
-                max: 30,
-                min: 5,
+                max: 20,
+                min: 2,
               ),
               FastColorPicker(
                 selectedColor: painterControl.color,
@@ -99,7 +101,8 @@ class OnlyImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('image'),
+        title: Text('image',
+            style: TextStyle(fontFamily: BasicApp.selectedFontFamilly)),
       ),
       body: Image.memory(
         imageData,
