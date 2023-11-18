@@ -9,13 +9,34 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  shared_preferences: ^2.2.2
+  table_calendar: ^3.0.9
+  story_painter: ^0.0.4
+  fast_color_picker: ^0.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-  story_painter: ^0.0.4
-  fast_color_picker: ^0.1.1
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets\Nunito-Bold.ttf
+          weight: 700
+        - asset: assets\Nunito-Regular.ttf
+          weight: 500
+    - family: OpenSans
+      fonts:
+        - asset: assets\OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets\OpenSans-Regular.ttf
+          weight: 500
+    - family: Oswald
+      fonts:
+        - asset: assets\Oswald-Bold.ttf
+          weight: 700
+        - asset: assets\Oswald-Regular.ttf
+          weight: 500

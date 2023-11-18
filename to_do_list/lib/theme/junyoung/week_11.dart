@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'junyoung.dart';
 
 class MenuWeek extends StatefulWidget {
   const MenuWeek({Key? key}) : super(key: key);
@@ -10,6 +11,7 @@ class MenuWeek extends StatefulWidget {
 class MenuWeekState extends State<MenuWeek> {
   @override
   Widget build(BuildContext context) {
-    return const Text("Week");
+    return Text("Week",
+        style: TextStyle(fontFamily: BasicApp.selectedFontFamilly));
   }
 }
