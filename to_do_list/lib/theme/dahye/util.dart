@@ -1,29 +1,35 @@
 import "package:flutter/material.dart";
 
-Widget addToDoDialog(BuildContext context, Function add, Function setState) {
-  // title, content, startTime, endTime to be added by textformfield
+class AddToDoDialog extends StatefulWidget {
+  const AddToDoDialog({Key? key, required this.add}) : super(key: key);
+  final Function add;
 
+  @override
+  AddToDoDialogState createState() => AddToDoDialogState();
+}
+
+class AddToDoDialogState extends State<AddToDoDialog> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController contentController = TextEditingController();
-  TextEditingController startDateController = TextEditingController();
-  TextEditingController startTimeController = TextEditingController();
-  TextEditingController endDateController = TextEditingController();
-  TextEditingController endTimeController = TextEditingController();
+  final TextEditingController startDateController = TextEditingController();
+  final TextEditingController endDateController = TextEditingController();
 
-  return AlertDialog(
-      title: const Text("Add ToDo"),
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text("일정 추가"),
       content: Form(
         key: formKey,
         child: SizedBox(
-            height: MediaQuery.of(context).size.height * 0.4,
+            height: MediaQuery.of(context).size.height * 0.5,
+            width: MediaQuery.of(context).size.width * 0.4,
             child: Column(
               children: [
                 TextFormField(
                   controller: titleController,
                   decoration: const InputDecoration(
                     labelText: "제목",
-                    hintText: "제목을 입력하세요",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -36,7 +42,6 @@ Widget addToDoDialog(BuildContext context, Function add, Function setState) {
                   controller: contentController,
                   decoration: const InputDecoration(
                     labelText: "내용",
-                    hintText: "내용을 입력하세요",
                   ),
                   validator: (String? value) {
                     if (value == null || value.isEmpty) {
@@ -45,67 +50,82 @@ Widget addToDoDialog(BuildContext context, Function add, Function setState) {
                     return null;
                   },
                 ),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  SizedBox(
-                      height: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15, right: 10),
-                        child: OutlinedButton(
-                          onPressed: () {
-                            showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now())
-                                .then((value) {
-                              if (value != null) {
-                                startTimeController.text =
-                                    value.toString().substring(10, 15);
-                              }
-                            });
-                            showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2021),
-                                    lastDate: DateTime(2025))
-                                .then((value) {
-                              if (value != null) {
-                                startDateController.text =
-                                    value.toString().substring(0, 10);
-                              }
-                            });
-                          },
-                          child: const Text("시작"),
-                        ),
-                      )),
-                  SizedBox(
-                      height: 60,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15, left: 10),
-                        child: OutlinedButton(
-                          onPressed: () {
-                            showTimePicker(
-                                    context: context,
-                                    initialTime: TimeOfDay.now())
-                                .then((value) {
-                              if (value != null) {
-                                endTimeController.text =
-                                    value.toString().substring(10, 15);
-                              }
-                            });
-                            showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2021),
-                                    lastDate: DateTime(2025))
-                                .then((value) {
-                              if (value != null) {
-                                endDateController.text =
-                                    value.toString().substring(0, 10);
-                              }
-                            });
-                          },
-                          child: const Text("종료"),
-                        ),
-                      )),
+                Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2025))
+                          .then((value) {
+                        if (value != null) {
+                          setState(() {
+                            startDateController.text =
+                                value.toString().substring(0, 10);
+                          });
+                        }
+                      });
+                    },
+                    child: const Text("시작"),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                      child: TextFormField(
+                    controller: startDateController,
+                    decoration: const InputDecoration(
+                      labelText: "시작일",
+                      hintText: "YYYY-MM-DD",
+                    ),
+                    validator: (String? value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !RegExp(r"^\d{4}-\d{2}-\d{2}$").hasMatch(value)) {
+                        return "시작일을 입력하세요";
+                      }
+                      return null;
+                    },
+                  ))
+                ]),
+                Row(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2025))
+                          .then((value) {
+                        if (value != null) {
+                          setState(() {
+                            endDateController.text =
+                                value.toString().substring(0, 10);
+                          });
+                        }
+                      });
+                    },
+                    child: const Text("종료"),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                      child: TextFormField(
+                    controller: endDateController,
+                    decoration: const InputDecoration(
+                      labelText: "종료일",
+                      hintText: "YYYY-MM-DD",
+                    ),
+                    validator: (String? value) {
+                      if (value == null ||
+                          value.isEmpty ||
+                          !RegExp(r"^\d{4}-\d{2}-\d{2}$").hasMatch(value)) {
+                        return "종료일을 입력하세요";
+                      }
+                      if (startDateController.text.compareTo(value) > 0) {
+                        return "종료일은 시작일보다 빠를 수 없습니다";
+                      }
+                      return null;
+                    },
+                  ))
                 ]),
                 const Spacer(),
                 ElevatedButton(
@@ -116,51 +136,18 @@ Widget addToDoDialog(BuildContext context, Function add, Function setState) {
                   ),
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      int startdate = int.parse(startDateController.text
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""));
-                      int enddate = int.parse(endDateController.text
-                          .replaceAll("-", "")
-                          .replaceAll(" ", ""));
-                      int starttime = int.parse(
-                          startTimeController.text.replaceAll(":", ""));
-                      int endtime =
-                          int.parse(endTimeController.text.replaceAll(":", ""));
-                      if (enddate < startdate ||
-                          ((enddate == startdate) && (endtime < starttime))) {
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text("오류"),
-                                content:
-                                    const Text("종료 날짜와 시간이 시작 날짜와 시간보다 빠릅니다."),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Text("닫기"),
-                                  )
-                                ],
-                              );
-                            });
-                      } else {
-                        add(
-                          titleController.text,
-                          contentController.text,
-                          '${startDateController.text} ${startTimeController.text}',
-                          '${endDateController.text} ${endTimeController.text}',
-                        );
-                        Navigator.pop(context);
-                      }
+                      widget.add(titleController.text, contentController.text,
+                          startDateController.text, endDateController.text);
+                      Navigator.pop(context);
                     }
                   },
                   child: const Text("추가"),
                 )
               ],
             )),
-      ));
+      ),
+    );
+  }
 }
 
 Widget viewToDoDialog(BuildContext context, List content) {
@@ -172,9 +159,9 @@ Widget viewToDoDialog(BuildContext context, List content) {
       children: [
         Text("내용  " + content[1]),
         const SizedBox(height: 10),
-        Text("시작  " + content[2]),
+        Text("시작일  " + content[2].toString().substring(0, 10)),
         const SizedBox(height: 10),
-        Text("종료  " + content[3]),
+        Text("종료일 " + content[3].toString().substring(0, 10)),
       ],
     ),
     actions: [

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPhoto extends StatefulWidget {
   @override
@@ -14,6 +15,36 @@ class _MenuPhotoState extends State<MenuPhoto> {
     var imageSource = await _imagePicker.getImage(source: ImageSource.gallery);
     setState(() {
       imageFile = File(imageSource!.path);
+    });
+
+    // Save the image path to SharedPreferences
+    if (imageFile != null) {
+      saveImagePath(imageFile!.path);
+    }
+  }
+
+  // Save the image path to SharedPreferences
+  Future<void> saveImagePath(String path) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('imagePath', path);
+  }
+
+  // Load the image path from SharedPreferences
+  Future<String?> loadImagePath() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('imagePath');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // Load the image path from SharedPreferences when the widget initializes
+    loadImagePath().then((path) {
+      if (path != null) {
+        setState(() {
+          imageFile = File(path);
+        });
+      }
     });
   }
 
@@ -36,8 +67,8 @@ class _MenuPhotoState extends State<MenuPhoto> {
                             )),
                         SizedBox(height: 20),
                         Container(
-                          height: MediaQuery.of(context).size.width * 0.8,
-                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: MediaQuery.of(context).size.width * 0.7,
+                          width: MediaQuery.of(context).size.width * 0.7,
                           decoration: BoxDecoration(
                               color: Color.fromARGB(248, 245, 238, 225),
                               shape: BoxShape.circle),

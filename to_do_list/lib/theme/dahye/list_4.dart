@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'util.dart';
 
 class MenuList extends StatefulWidget {
@@ -9,12 +13,20 @@ class MenuList extends StatefulWidget {
 }
 
 class MenuListState extends State<MenuList> {
-  List listComponent = [
-    ["title1", "content1", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-    ["title2", "content2", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-    ["title3", "content3", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-    ["title4", "content4", "2023-10-10 12:27:00", "2023-10-11 13:27:00"],
-  ];
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  List<String> listComponent = [];
+  Future<void> _loadData() async {
+    final SharedPreferences prefs = await _prefs;
+    setState(() {
+      listComponent = prefs.getStringList("listComponent") ?? [];
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +40,24 @@ class MenuListState extends State<MenuList> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
-                      return addToDoDialog(context, (String title,
-                          String content, String startTime, String endTime) {
+                      return AddToDoDialog(add: (String title, String content,
+                          String startDate, String endDate) async {
+                        final SharedPreferences prefs = await _prefs;
                         setState(() {
-                          listComponent
-                              .add([title, content, startTime, endTime]);
+                          listComponent.add(jsonEncode([
+                            title,
+                            content,
+                            startDate,
+                            endDate
+                          ])); //2차원 배열 쉽지 않아, 하나의 String으로
+                          prefs.setStringList("listComponent", listComponent);
                         });
-                      }, setState);
+                      });
                     });
               });
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(250, 254, 190, 73),
+              backgroundColor: Color.fromARGB(250, 254, 190, 73),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
             ),
@@ -56,7 +74,7 @@ class MenuListState extends State<MenuList> {
             iconSize: MaterialStateProperty.all(25),
             alignment: Alignment.center),
         padding: const EdgeInsets.all(0),
-        icon: const Icon(Icons.delete, color: Colors.red),
+        icon: const Icon(Icons.delete, color: Colors.grey),
       );
     }
 
@@ -67,25 +85,36 @@ class MenuListState extends State<MenuList> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             addButton(),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: listComponent.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return menuComponent(
-                      context,
-                      listComponent[index],
-                      deleteButton(index, () {
-                        setState(() {
-                          listComponent.removeAt(index);
-                        });
-                      }));
-                })
+            listComponent.isEmpty
+                ? const Padding(
+                    padding: EdgeInsets.only(top: 200),
+                    child: Text("일정이 없습니다",
+                        style: TextStyle(fontSize: 20, color: Colors.grey)),
+                  )
+                : ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: listComponent.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return menuComponent(
+                          context,
+                          listComponent[index],
+                          deleteButton(index, () async {
+                            final SharedPreferences prefs = await _prefs;
+                            setState(() {
+                              listComponent.removeAt(index);
+                              prefs.setStringList(
+                                  "listComponent", listComponent);
+                            });
+                          }));
+                    })
           ],
         ));
   }
 }
 
-Widget menuComponent(BuildContext context, List content, Widget deleteButton) {
+Widget menuComponent(BuildContext context, content, Widget deleteButton) {
+  List listContent = jsonDecode(content);
+
   return Padding(
       padding: const EdgeInsets.only(top: 5),
       child: ElevatedButton(
@@ -93,7 +122,7 @@ Widget menuComponent(BuildContext context, List content, Widget deleteButton) {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return viewToDoDialog(context, content);
+                  return viewToDoDialog(context, listContent);
                 });
           },
           style: ElevatedButton.styleFrom(
@@ -103,20 +132,21 @@ Widget menuComponent(BuildContext context, List content, Widget deleteButton) {
           ),
           child: Container(
               height: 50,
+              width: double.infinity,
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
-                    color: const Color.fromARGB(250, 254, 190, 73), width: 1.5),
+                    color: Color.fromARGB(250, 254, 190, 73), width: 1.5),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Row(
                 children: [
-                  Text(content[0],
-                      style: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold)),
+                  Text(listContent[0],
+                      style: const TextStyle(fontWeight: FontWeight.bold)),
                   const SizedBox(width: 10),
-                  Text(content[1], style: const TextStyle(color: Colors.grey)),
+                  Text(listContent[1],
+                      style: const TextStyle(color: Colors.grey)),
                   const Spacer(),
                   deleteButton
                 ],
