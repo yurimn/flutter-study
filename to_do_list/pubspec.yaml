@@ -4,17 +4,18 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-  sdk: ">=3.2.0-231.0.dev <4.0.0"
+    sdk: ">=3.2.0-231.0.dev <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
-  image_picker: ^0.8.5+3
-  shared_preferences: ^2.2.2
-  table_calendar: ^3.0.9
-  google_fonts: ^6.1.0
-  flutter_drawing_board: ^0.5.0
-
+    flutter:
+        sdk: flutter
+    table_calendar: ^3.0.9
+    story_painter: ^0.0.4
+    fast_color_picker: ^0.1.1
+    image_picker: ^0.8.5+3
+    shared_preferences: ^2.2.2
+    google_fonts: ^6.1.0
+    flutter_drawing_board: ^0.5.0
 
 dev_dependencies:
     flutter_test:
@@ -23,3 +24,22 @@ dev_dependencies:
 
 flutter:
     uses-material-design: true
+    fonts:
+        - family: Nunito
+          fonts:
+              - asset: assets\Nunito-Bold.ttf
+                weight: 700
+              - asset: assets\Nunito-Regular.ttf
+                weight: 500
+        - family: OpenSans
+          fonts:
+              - asset: assets\OpenSans-Bold.ttf
+                weight: 700
+              - asset: assets\OpenSans-Regular.ttf
+                weight: 500
+        - family: Oswald
+          fonts:
+              - asset: assets\Oswald-Bold.ttf
+                weight: 700
+              - asset: assets\Oswald-Regular.ttf
+                weight: 500
