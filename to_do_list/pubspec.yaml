@@ -4,14 +4,17 @@ publish_to: "none"
 version: 0.1.0
 
 environment:
-    sdk: ">=3.2.0-231.0.dev <4.0.0"
+  sdk: ">=3.2.0-231.0.dev <4.0.0"
 
 dependencies:
-    flutter:
-        sdk: flutter
-    flutter_drawing_board: ^0.5.0
-    shared_preferences: ^2.2.2
-    table_calendar: ^3.0.9
+  flutter:
+    sdk: flutter
+  image_picker: ^0.8.5+3
+  shared_preferences: ^2.2.2
+  table_calendar: ^3.0.9
+  google_fonts: ^6.1.0
+  flutter_drawing_board: ^0.5.0
+
 
 dev_dependencies:
     flutter_test:
