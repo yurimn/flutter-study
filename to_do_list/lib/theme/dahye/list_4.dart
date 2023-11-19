@@ -57,7 +57,7 @@ class MenuListState extends State<MenuList> {
               });
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color.fromARGB(250, 254, 190, 73),
+              backgroundColor: const Color.fromARGB(250, 254, 190, 73),
               shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
             ),
@@ -137,7 +137,7 @@ Widget menuComponent(BuildContext context, content, Widget deleteButton) {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
-                    color: Color.fromARGB(250, 254, 190, 73), width: 1.5),
+                    color: const Color.fromARGB(250, 254, 190, 73), width: 1.5),
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
               ),
               child: Row(

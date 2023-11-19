@@ -90,7 +90,7 @@ class MenuMonthState extends State<MenuMonth> {
                 }
 
                 if ((startDate.compareTo(_focusedDay
-                            .add(Duration(hours: 23, minutes: 59))) ==
+                            .add(const Duration(hours: 23, minutes: 59))) ==
                         -1) &&
                     (endDate.compareTo(_focusedDay) == 1)) {
                   return Card(
@@ -108,6 +108,8 @@ class MenuMonthState extends State<MenuMonth> {
                                   return viewToDoDialog(context, data);
                                 });
                           }));
+                } else {
+                  return const SizedBox();
                 }
               }))
     ]);

@@ -77,7 +77,7 @@ class MenuListState extends State<MenuList> {
     }
 
     return Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,7 +85,7 @@ class MenuListState extends State<MenuList> {
             addButton(),
             listComponent.isEmpty
                 ? Padding(
-                    padding: EdgeInsets.only(top: 200),
+                    padding: const EdgeInsets.only(top: 200),
                     child: Text("No schedule",
                         style: TextStyle(
                             fontFamily: BasicApp.selectedFontFamilly,

@@ -10,18 +10,18 @@ class MyThemeData {
         textTheme: _buildTextTheme(base.textTheme),
         colorScheme: ColorScheme(
             brightness: Brightness.light,
-            primary: Color.fromARGB(255, 64, 95, 135),
+            primary: const Color.fromARGB(255, 64, 95, 135),
             onPrimary: Colors.white,
             primaryContainer: Colors.white,
-            onPrimaryContainer: Color.fromARGB(255, 64, 95, 135),
-            secondary: Color.fromARGB(250, 254, 190, 73),
+            onPrimaryContainer: const Color.fromARGB(255, 64, 95, 135),
+            secondary: const Color.fromARGB(250, 254, 190, 73),
             onSecondary: Colors.white,
             error: Colors.red.shade400,
             onError: Colors.red.shade200,
             background: Colors.white,
             onBackground: Colors.white,
             surface: Colors.white,
-            onSurface: Color.fromARGB(255, 64, 95, 135)));
+            onSurface: const Color.fromARGB(255, 64, 95, 135)));
   }
 
   static TextTheme _buildTextTheme(TextTheme base) {

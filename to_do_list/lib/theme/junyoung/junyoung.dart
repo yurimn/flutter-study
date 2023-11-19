@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list/main_junyoung.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'list_11.dart';
 import 'memo_11.dart';
 import 'month_11.dart';
+import '../../settings.dart';
 
 class BasicApp extends StatefulWidget {
   const BasicApp({Key? key}) : super(key: key);
@@ -34,19 +37,19 @@ class BasicAppState extends State<BasicApp> {
           child: Row(
             children: [
               IconButton(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     left: 12, top: 8, right: 8, bottom: 8), // 패딩 설정
                 icon: const Icon(Icons.dark_mode, color: Colors.black),
                 onPressed: () {
                   setState(() {
                     isDarkMode = !isDarkMode;
-                    MainApp.themeNotifier.value =
+                    ThemeJunyoung.themeNotifier.value =
                         isDarkMode ? ThemeMode.dark : ThemeMode.light;
                   });
                 },
               ),
               IconButton(
-                padding: EdgeInsets.all(8), // 패딩 설정
+                padding: const EdgeInsets.all(8), // 패딩 설정
                 icon: const Icon(Icons.font_download, color: Colors.black),
                 onPressed: () {
                   setState(() {
@@ -67,14 +70,51 @@ class BasicAppState extends State<BasicApp> {
         ),
         title: Text('TODOLIST',
             style: TextStyle(
-                color: Color.fromARGB(255, 0, 0, 0),
+                color: const Color.fromARGB(255, 0, 0, 0),
                 fontFamily: BasicApp.selectedFontFamilly,
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
+          DropdownButtonHideUnderline(
+              child: DropdownButton2(
+            customButton: const Icon(
+              Icons.settings,
+              color: Colors.black,
+              size: 28,
+            ),
+            items: const [
+              DropdownMenuItem(
+                value: "setting",
+                child: SizedBox(
+                  width: 100,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Setting",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            dropdownStyleData: const DropdownStyleData(
+              maxHeight: 200,
+              width: 100,
+            ),
+            onChanged: (value) {
+              if (value == "setting") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Setting()),
+                );
+              }
+            },
+          )),
+          const SizedBox(
+            width: 10,
           )
         ],
         centerTitle: true,

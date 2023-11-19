@@ -66,8 +66,7 @@ class MenuMonthState extends State<MenuMonth> {
         onPageChanged: (focusedDay) {
           _focusedDay = focusedDay;
         },
-        // style
-        calendarStyle: CalendarStyle(
+        calendarStyle: const CalendarStyle(
           todayDecoration: BoxDecoration(
             color: Color.fromARGB(120, 64, 95, 135),
             shape: BoxShape.circle,
@@ -88,15 +87,17 @@ class MenuMonthState extends State<MenuMonth> {
                 final DateTime endDate = DateTime.parse(data[3]);
 
                 if ((startDate.isBefore(_focusedDay) &&
-                        endDate.add(Duration(days: 1)).isAfter(_focusedDay)) ||
+                        endDate
+                            .add(const Duration(days: 1))
+                            .isAfter(_focusedDay)) ||
                     startDate.isAtSameMomentAs(_focusedDay) ||
                     endDate
-                        .add(Duration(days: 1))
+                        .add(const Duration(days: 1))
                         .isAtSameMomentAs(_focusedDay)) {
                   return Card(
                       child: ListTile(
                           title: Text(data[0],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.black,
                               )),
                           subtitle: Row(
@@ -104,13 +105,13 @@ class MenuMonthState extends State<MenuMonth> {
                             children: [
                               Text(
                                 data[1],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                 ),
                               ),
                               Text(
                                 "~ " + data[3],
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.grey,
                                 ),
                               ),

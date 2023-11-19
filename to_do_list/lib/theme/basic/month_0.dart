@@ -89,6 +89,8 @@ class MenuMonthState extends State<MenuMonth> {
                                   return viewToDoDialog(context, data);
                                 });
                           }));
+                } else {
+                  return const SizedBox();
                 }
               }))
     ]);

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
 import 'list_0.dart';
 import 'memo_0.dart';
 import 'month_0.dart';
+import '../../settings.dart';
 
 class BasicApp extends StatefulWidget {
   const BasicApp({Key? key}) : super(key: key);
@@ -33,9 +36,46 @@ class BasicAppState extends State<BasicApp> {
                 fontWeight: FontWeight.bold,
                 fontSize: 25)),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
+          DropdownButtonHideUnderline(
+              child: DropdownButton2(
+            customButton: const Icon(
+              Icons.settings,
+              color: Colors.black,
+              size: 28,
+            ),
+            items: const [
+              DropdownMenuItem(
+                value: "setting",
+                child: SizedBox(
+                  width: 100,
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Text(
+                      "Setting",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+            dropdownStyleData: const DropdownStyleData(
+              maxHeight: 200,
+              width: 100,
+            ),
+            onChanged: (value) {
+              if (value == "setting") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Setting()),
+                );
+              }
+            },
+          )),
+          const SizedBox(
+            width: 10,
           )
         ],
         centerTitle: true,

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'theme/junyoung/junyoung.dart';
 
-void main() {
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
+class ThemeJunyoung extends StatelessWidget {
   // Using "static" so that we can easily access it later
   static final ValueNotifier<ThemeMode> themeNotifier =
       ValueNotifier(ThemeMode.light);
 
-  const MainApp({Key? key}) : super(key: key);
+  const ThemeJunyoung({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +14,7 @@ class MainApp extends StatelessWidget {
         valueListenable: themeNotifier,
         builder: (_, ThemeMode currentMode, __) {
           return MaterialApp(
-            // Remove the debug banner
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(primarySwatch: Colors.amber),
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,

@@ -4,15 +4,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MenuPhoto extends StatefulWidget {
+  const MenuPhoto({Key? key}) : super(key: key);
   @override
   State<MenuPhoto> createState() => _MenuPhotoState();
 }
 
 class _MenuPhotoState extends State<MenuPhoto> {
-  ImagePicker _imagePicker = ImagePicker();
+  final ImagePicker _imagePicker = ImagePicker();
   File? imageFile;
   getImageFromGallery() async {
-    var imageSource = await _imagePicker.getImage(source: ImageSource.gallery);
+    var imageSource = await _imagePicker.pickImage(source: ImageSource.gallery);
     setState(() {
       imageFile = File(imageSource!.path);
     });
@@ -52,6 +53,7 @@ class _MenuPhotoState extends State<MenuPhoto> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            backgroundColor: Colors.white,
             body: Center(
                 child: GestureDetector(
                     onTap: () {
@@ -60,20 +62,20 @@ class _MenuPhotoState extends State<MenuPhoto> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("오늘의 사진!",
+                        const Text("오늘의 사진!",
                             style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                             )),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Container(
                           height: MediaQuery.of(context).size.width * 0.7,
                           width: MediaQuery.of(context).size.width * 0.7,
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Color.fromARGB(248, 245, 238, 225),
                               shape: BoxShape.circle),
                           child: imageFile == null
-                              ? Icon(
+                              ? const Icon(
                                   Icons.camera,
                                   size: 30,
                                 )

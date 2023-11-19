@@ -59,7 +59,7 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                     SizedBox(
                         height: 60,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 15, right: 10),
+                          padding: const EdgeInsets.only(top: 15, right: 10),
                           child: ElevatedButton(
                             onPressed: () {
                               showTimePicker(
@@ -67,7 +67,6 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                                       initialTime: TimeOfDay.now())
                                   .then((value) {
                                 if (value != null) {
-                                  print(value);
                                   startTimeController.text =
                                       value.toString().substring(10, 15);
                                 }
@@ -79,7 +78,6 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                                       lastDate: DateTime(2025))
                                   .then((value) {
                                 if (value != null) {
-                                  print(value);
                                   startDateController.text =
                                       value.toString().substring(0, 10);
                                 }
@@ -94,7 +92,7 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                     SizedBox(
                         height: 60,
                         child: Padding(
-                          padding: EdgeInsets.only(top: 15, left: 10),
+                          padding: const EdgeInsets.only(top: 15, left: 10),
                           child: ElevatedButton(
                             onPressed: () {
                               showTimePicker(
@@ -102,7 +100,6 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                                       initialTime: TimeOfDay.now())
                                   .then((value) {
                                 if (value != null) {
-                                  print(value);
                                   endTimeController.text =
                                       value.toString().substring(10, 15);
                                 }
@@ -114,7 +111,6 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                                       lastDate: DateTime(2025))
                                   .then((value) {
                                 if (value != null) {
-                                  print(value);
                                   endDateController.text =
                                       value.toString().substring(0, 10);
                                 }
@@ -144,8 +140,7 @@ class AddToDoDialogState extends State<AddToDoDialog> {
                           startTimeController.text.replaceAll(":", ""));
                       int endtime =
                           int.parse(endTimeController.text.replaceAll(":", ""));
-                      print(
-                          '${startdate}, ${enddate}, ${starttime}, ${endtime}');
+
                       if (formKey.currentState!.validate()) {
                         if (enddate < startdate ||
                             ((enddate == startdate) && (endtime < starttime))) {
