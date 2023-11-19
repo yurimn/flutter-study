@@ -1,11 +1,10 @@
+import 'dart:ui' as ui;
 import 'dart:typed_data';
 
 import 'package:fast_color_picker/fast_color_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:story_painter/story_painter.dart';
 
-import 'dart:ui' as ui;
 import 'junyoung.dart';
 
 class MenuMemo extends StatefulWidget {
@@ -34,13 +33,13 @@ class MenuMemoState extends State<MenuMemo> {
             style: TextStyle(fontFamily: BasicApp.selectedFontFamilly)),
         actions: [
           IconButton(
-            icon: Icon(Icons.undo),
+            icon: const Icon(Icons.undo),
             onPressed: () async {
               painterControl.undo();
             },
           ),
           IconButton(
-            icon: Icon(Icons.save),
+            icon: const Icon(Icons.save),
             onPressed: () async {
               ui.Image image = await painterControl.toImage(pixelRatio: 3.0);
               ByteData? byteData =

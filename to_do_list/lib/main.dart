@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'main_junyoung.dart';
 import 'main_dahye.dart';
@@ -7,6 +8,9 @@ import 'main_basic.dart';
 import 'settings.dart';
 
 void main() {
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
   final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   Future<String?> loadTheme() async {
     final SharedPreferences _prefs = await prefs;
@@ -38,6 +42,7 @@ void main() {
       ),
     ),
   ));
+  FlutterNativeSplash.remove();
 }
 
 class MainApp extends StatelessWidget {

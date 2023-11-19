@@ -14,7 +14,7 @@ class BasicApp extends StatefulWidget {
 }
 
 class BasicAppState extends State<BasicApp> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   @override
   Widget build(BuildContext context) {
