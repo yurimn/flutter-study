@@ -35,6 +35,6 @@ GDSC 고려대학교 2기 모바일 주니어 스터디를 위한 자료 및 과
 - 4주차 (11/14) [[lecture]](https://github.com/yurimn/flutter-study/blob/main/lecture/week4/week4.pdf)
   - 비동기함수, 내부 저장소 사용법
 
-- 5주차 (11/21)
+- 5주차 (11/21) [[web link]](https://yurimn.github.io/to-do-list-web/)
   - 개인 결과물 공유 및 피드백
 
